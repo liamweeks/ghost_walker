@@ -15,6 +15,12 @@ impl Graphics {
         };
     }
 
+    pub fn set_background(&mut self, colour: &u32) {
+        for pixel in 0..self.buffer.len() {
+            self.buffer[pixel] = *colour;
+        }
+    }
+
     pub fn colour_point(&mut self, point: Point, colour: u32) {
 
         let pixel = point.y * WIDTH as i32 + point.x;
@@ -38,13 +44,6 @@ impl Graphics {
             }
         }
     
-    }   
-
-
-    pub fn set_background(&mut self, colour: &u32) {
-        for pixel in 0..self.buffer.len() {
-            self.buffer[pixel] = *colour;
-        }
     }
     
 }
