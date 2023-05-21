@@ -40,7 +40,8 @@ impl Text {
         }
     }
 
-    pub fn draw(&self, screen: &mut [u32], pos: (usize, usize), text: &str) {
+    pub fn draw(&self, screen: &mut [u32], point: Point, text: &str) {
+        let pos = point.to_usize();
         let mut x = pos.0;
         let y = pos.1;
         for c in text.chars() {

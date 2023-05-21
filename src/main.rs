@@ -46,7 +46,7 @@ fn main() {
             }
         } */
 
-        text.draw(&mut buffer, (20, HEIGHT as usize - 20), "Welcome to Ghost Walker");
+        text.draw(&mut buffer, Point::new(20, (HEIGHT - 20) as i32), "Welcome to Ghost Walker");
 
         window
             .update_with_buffer(&buffer, WIDTH as usize, HEIGHT as usize)

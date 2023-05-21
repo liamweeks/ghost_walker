@@ -14,4 +14,8 @@ impl Point {
             y
         };
     }
+
+    pub fn to_usize(&self) -> (usize, usize) {
+        return (self.x as usize, self.y as usize);
+    }
 }
