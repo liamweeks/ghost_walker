@@ -6,13 +6,9 @@ pub struct Point {
     pub y: i32,
 }
 
-
 impl Point {
     pub fn new(x: i32, y: i32) -> Self {
-        return Point {
-            x,
-            y
-        };
+        return Point { x, y };
     }
 
     pub fn to_usize(&self) -> (usize, usize) {

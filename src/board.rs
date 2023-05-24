@@ -37,8 +37,6 @@ impl Board {
             board[6][i] = Some(Piece::Pawn);
         }
 
-        return Self {
-            board
-        };
+        return Self { board };
     }
 }
