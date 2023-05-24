@@ -38,15 +38,18 @@ impl Graphics {
         }
     }
 
-
     pub fn render_board(&mut self, board: &Board) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
-    
+
         for y in 0..8 {
-            let y_offset = if y % 2 == 0 { 0 } else { 1 }; // Calculate the offset for each row
-    
+
+            let offset = y % 2;
+
+
             for x in 0..8 {
-                if (x + y_offset) % 2 == 0 {
+
+                if (x + offset) % 2 == 0 {
+
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
                         &square,
@@ -57,10 +60,9 @@ impl Graphics {
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
                         &square,
                         Colours::BLACK,
-                    );
+                    )
                 }
             }
         }
     }
-    
 }
