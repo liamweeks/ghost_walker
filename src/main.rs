@@ -22,7 +22,6 @@ mod prelude {
 
 fn main() {
     let game = Board::new();
-    let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
 
     let mut window = Window::new(
         "Ghost Walker",

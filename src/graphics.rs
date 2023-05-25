@@ -48,7 +48,7 @@ impl Graphics {
             for x in 0..8 {
                 let current_piece = &game.board[y][x];
 
-                let mut symbol = "";
+                let symbol;
 
                 match current_piece {
                     Some(Piece::King) => symbol = "Ki",
@@ -70,7 +70,7 @@ impl Graphics {
                     text.draw(
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        symbol,
+                        &symbol,
                     );
                 } else {
                     self.draw_rect(
@@ -82,7 +82,7 @@ impl Graphics {
                     text.draw(
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        symbol,
+                        &symbol,
                     );
                 }
             }

@@ -1,5 +1,3 @@
-use crate::prelude::*;
-
 #[derive(Debug)]
 pub struct Point {
     pub x: i32,

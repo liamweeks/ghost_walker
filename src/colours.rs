@@ -1,6 +1,7 @@
-use crate::prelude::*;
 pub struct Colours;
 
+
+#[allow(dead_code)]
 impl Colours {
     pub const RED: &'static u32 = &0xFF0000;
     pub const GREEN: &'static u32 = &0x00FF00;
