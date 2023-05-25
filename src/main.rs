@@ -15,9 +15,9 @@ mod prelude {
     pub use crate::point::*;
     pub use crate::text::*;
     pub use minifb::{Key, KeyRepeat, Window, WindowOptions};
-    pub const SQUARE_SIZE: u32 = 80;
-    pub const WIDTH: u32 = SQUARE_SIZE * 8;
-    pub const HEIGHT: u32 = SQUARE_SIZE * 8;
+    pub const SQUARE_SIZE: usize = 80;
+    pub const WIDTH: usize = SQUARE_SIZE * 8;
+    pub const HEIGHT: usize = SQUARE_SIZE * 8;
 }
 
 fn main() {
@@ -51,11 +51,11 @@ fn main() {
             }
         } */
 
-        text.draw(
+        /*  text.draw(
             &mut graphics.buffer,
             Point::new(20, (HEIGHT - 20) as i32),
             "Welcome to Ghost Walker",
-        );
+        ); */
 
         window
             .update_with_buffer(&graphics.buffer, WIDTH as usize, HEIGHT as usize)

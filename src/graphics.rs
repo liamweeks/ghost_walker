@@ -38,29 +38,52 @@ impl Graphics {
         }
     }
 
-    pub fn render_board(&mut self, board: &Board) {
+    pub fn render_board(&mut self, game: &Board) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
+        let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
 
         for y in 0..8 {
-
             let offset = y % 2;
 
-
             for x in 0..8 {
+                let current_piece = &game.board[y][x];
+
+                let mut symbol = "";
+
+                match current_piece {
+                    Some(Piece::King) => symbol = "Ki",
+                    Some(Piece::Queen) => symbol = "Q",
+                    Some(Piece::Pawn) => symbol = "P",
+                    Some(Piece::Rook) => symbol = "R",
+                    Some(Piece::Knight) => symbol = "Kn",
+                    Some(Piece::Bishop) => symbol = "B",
+                    None => symbol = ""
+                }
 
                 if (x + offset) % 2 == 0 {
-
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
                         &square,
                         Colours::WHITE,
+                    );
+
+                    text.draw(
+                        &mut self.buffer,
+                        Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
+                        symbol,
                     );
                 } else {
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
                         &square,
                         Colours::BLACK,
-                    )
+                    );
+
+                    text.draw(
+                        &mut self.buffer,
+                        Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
+                        symbol,
+                    );
                 }
             }
         }

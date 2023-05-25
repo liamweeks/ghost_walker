@@ -10,9 +10,11 @@ pub struct Text {
 #[inline(always)]
 pub fn color_from_bit(bit: u8) -> u32 {
     if bit == 0 {
-        0x00000000
+        0x000000
+        // *Colours::BLUE
     } else {
-        0xFFFFFFFF
+        // 0xFFFFFFFF
+        *Colours::GREEN
     }
 }
 
