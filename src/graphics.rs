@@ -51,12 +51,12 @@ impl Graphics {
                 let symbol;
 
                 match current_piece {
-                    Some(Piece::King) => symbol = "Ki",
-                    Some(Piece::Queen) => symbol = "Q",
-                    Some(Piece::Pawn) => symbol = "P",
-                    Some(Piece::Rook) => symbol = "R",
-                    Some(Piece::Knight) => symbol = "Kn",
-                    Some(Piece::Bishop) => symbol = "B",
+                    Some(Piece::King(team, points)) => symbol = "Ki",
+                    Some(Piece::Queen(team, points)) => symbol = "Q",
+                    Some(Piece::Pawn(team, points)) => symbol = "P",
+                    Some(Piece::Rook(team, points)) => symbol = "R",
+                    Some(Piece::Knight(team, points)) => symbol = "Kn",
+                    Some(Piece::Bishop(team, points)) => symbol = "B",
                     None => symbol = ""
                 }
 
