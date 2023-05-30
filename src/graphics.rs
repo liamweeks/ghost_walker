@@ -38,7 +38,7 @@ impl Graphics {
         }
     }
 
-    pub fn render_board(&mut self, game: &Board) {
+    pub fn render_board(&mut self, game: &Board, mouse: &Point) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
         let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
 
@@ -47,6 +47,7 @@ impl Graphics {
 
             for x in 0..8 {
                 let current_piece = &game.board[y][x];
+
 
                 let symbol;
 
@@ -83,6 +84,15 @@ impl Graphics {
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
                         &symbol,
+                    );
+                }
+
+
+                if &Point::new(x as i32, y as i32) == mouse {
+                    self.draw_rect(
+                        Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
+                        &square,
+                        Colours::RED,
                     );
                 }
             }
