@@ -45,13 +45,15 @@ impl Board {
         Board { board }
     }
 
+    /// GAME LOGIC
+
     pub fn get_possible_moves(&self, current_pos: &Point) {
 
 
         for row in &self.board {
             for element in row {
-               match element.as_ref().unwrap() {
-                Some(Piece::Pawn(_, _)) => println!("I hit a pawn"),
+               match element {
+                Some(Piece) => println!("I hit a pawn"),
                 _ => println!("I hit something, but I don't know what"),
                 None => {}
                }

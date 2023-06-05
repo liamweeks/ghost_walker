@@ -41,6 +41,7 @@ impl Graphics {
     pub fn render_board(&mut self, game: &Board, mouse: &Point) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
         let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
+        
 
         for y in 0..8 {
             let offset = y % 2;
@@ -49,16 +50,21 @@ impl Graphics {
                 let current_piece = &game.board[y][x];
 
 
-                let symbol;
+                let symbol: String;
 
                 match current_piece {
-                    Some(Piece::King(team, points)) => symbol = "Ki",
-                    Some(Piece::Queen(team, points)) => symbol = "Q",
-                    Some(Piece::Pawn(team, points)) => symbol = "P",
-                    Some(Piece::Rook(team, points)) => symbol = "R",
-                    Some(Piece::Knight(team, points)) => symbol = "Kn",
-                    Some(Piece::Bishop(team, points)) => symbol = "B",
-                    None => symbol = ""
+                    Some(piece) => {
+                        
+                        if piece.name == "Knight" {
+                            symbol = "Kn".to_string()
+                        } else if piece.name == "King" {
+                            symbol = "Ki".to_string()
+                        } else {
+                            symbol = piece.name.chars().nth(0).unwrap().to_string();
+                        }
+        
+                    }
+                    None => symbol = "".to_string()
                 }
 
                 if (x + offset) % 2 == 0 {
@@ -67,6 +73,14 @@ impl Graphics {
                         &square,
                         Colours::WHITE,
                     );
+
+                    if &Point::new(x as i32, y as i32) == mouse {
+                        self.draw_rect(
+                            Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
+                            &square,
+                            Colours::RED,
+                        );
+                    }
 
                     text.draw(
                         &mut self.buffer,
@@ -80,6 +94,14 @@ impl Graphics {
                         Colours::BLACK,
                     );
 
+                    if &Point::new(x as i32, y as i32) == mouse {
+                        self.draw_rect(
+                            Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
+                            &square,
+                            Colours::RED,
+                        );
+                    }
+
                     text.draw(
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
@@ -87,14 +109,6 @@ impl Graphics {
                     );
                 }
 
-
-                if &Point::new(x as i32, y as i32) == mouse {
-                    self.draw_rect(
-                        Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
-                        &square,
-                        Colours::RED,
-                    );
-                }
             }
         }
     }

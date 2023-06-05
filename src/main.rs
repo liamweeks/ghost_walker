@@ -6,10 +6,12 @@ mod graphics;
 mod piece;
 mod point;
 mod text;
+mod team;
 
 mod prelude {
     pub use crate::board::*;
     pub use crate::colours::*;
+    pub use crate::team::*;
     pub use crate::graphics::*;
     pub use crate::piece::*;
     pub use crate::point::*;
@@ -37,13 +39,18 @@ fn main() {
     window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
     let mut mouse = Point::new(4, 4);
 
+    game.get_possible_moves(&mouse);
+    let mut delta_x: i32 = 0;
+    let mut delta_y: i32 = 0;
+
     while window.is_open() && !window.is_key_down(Key::Escape) {
-        let mut delta_x: i32 = 0;
-        let mut delta_y: i32 = 0;
+        delta_x = 0;
+        delta_y = 0;
 
 
         graphics.set_background(Colours::BLUE);
         graphics.render_board(&game, &mouse);
+        game.get_possible_moves(&mouse);
 
         
         
@@ -75,12 +82,13 @@ fn main() {
         mouse.y += delta_y;
 
         graphics.render_board(&game, &mouse);
+        
 
-        text.draw(
+        /* text.draw(
             &mut graphics.buffer,
             Point::new(20, (HEIGHT - 20) as i32),
             "Welcome to Ghost Walker",
-        );
+        ); */
 
         window
             .update_with_buffer(&graphics.buffer, WIDTH as usize, HEIGHT as usize)
