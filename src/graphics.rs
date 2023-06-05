@@ -52,13 +52,9 @@ impl Graphics {
                 let symbol;
 
                 match current_piece {
-                    Some(Piece::King(team, points)) => symbol = "Ki",
-                    Some(Piece::Queen(team, points)) => symbol = "Q",
-                    Some(Piece::Pawn(team, points)) => symbol = "P",
-                    Some(Piece::Rook(team, points)) => symbol = "R",
-                    Some(Piece::Knight(team, points)) => symbol = "Kn",
-                    Some(Piece::Bishop(team, points)) => symbol = "B",
-                    None => symbol = ""
+                    Some(Piece::White(kind, points)) => symbol = String::from(kind.chars().nth(1).unwrap()),
+                    Some(Piece::Black(kind, points)) => symbol = String::from(kind.chars().nth(1).unwrap()),
+                    _ => symbol = String::from("")
                 }
 
                 if (x + offset) % 2 == 0 {
