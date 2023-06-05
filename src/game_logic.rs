@@ -5,6 +5,7 @@ pub struct GameLogic;
 
 impl GameLogic {
     pub fn get_possible_moves(&self, game: &Board, current_pos: &Point) -> Vec<Point> {
+        let mut move_points = Vec::new();
         // println!("{:#?}", game);
 
         println!("Current Posiiton: {:#?}", &game.board[current_pos.y as usize][current_pos.x as usize].clone().unwrap_or_else(|| {Piece::Empty}));
@@ -26,6 +27,6 @@ impl GameLogic {
             }
          } */
 
-        Vec::new()
+
     }
 }
