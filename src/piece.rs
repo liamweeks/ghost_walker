@@ -1,19 +1,9 @@
-use crate::prelude::*;
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Piece {
-    pub value: u8,
-    pub name: &'a str,
-    pub team: Team,
-}
-
-
-impl Piece {
-    pub fn new(value: u8, name: String, team: Team) -> Piece {
-        Piece {
-            value,
-            name: &name,
-            team,
-        }
-    }
+#[derive(Debug, Clone)]
+pub enum Piece<'a> {
+    King(&'a str, u8),
+    Queen(&'a str, u8),
+    Pawn(&'a str, u8),
+    Rook(&'a str, u8),
+    Knight(&'a str, u8),
+    Bishop(&'a str, u8),
 }
