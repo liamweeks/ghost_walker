@@ -1,6 +1,5 @@
 pub struct Colours;
 
-
 #[allow(dead_code)]
 impl Colours {
     pub const RED: &'static u32 = &0xFF0000;
