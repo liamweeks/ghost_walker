@@ -38,7 +38,7 @@ impl Graphics {
         }
     }
 
-    pub fn render_board(&mut self, game: &Board, mouse: &Point) {
+    pub fn render_board(&mut self, game: &Board, mouse: &Point, possible_moves: &Vec<CustomMove>) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
         let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
 
@@ -48,13 +48,16 @@ impl Graphics {
             for x in 0..8 {
                 let current_piece = &game.board[y][x];
 
-
                 let symbol;
 
                 match current_piece {
-                    Some(Piece::White(kind, points)) => symbol = String::from(kind.chars().nth(1).unwrap()),
-                    Some(Piece::Black(kind, points)) => symbol = String::from(kind.chars().nth(1).unwrap()),
-                    _ => symbol = String::from("")
+                    Piece::White(kind, points) => {
+                        symbol = String::from(kind.chars().nth(1).unwrap())
+                    }
+                    Piece::Black(kind, points) => {
+                        symbol = String::from(kind.chars().nth(1).unwrap())
+                    }
+                    _ => symbol = String::from(""),
                 }
 
                 if (x + offset) % 2 == 0 {
@@ -82,7 +85,6 @@ impl Graphics {
                         &symbol,
                     );
                 }
-
 
                 if &Point::new(x as i32, y as i32) == mouse {
                     self.draw_rect(

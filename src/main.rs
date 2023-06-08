@@ -2,19 +2,21 @@ use crate::prelude::*;
 
 mod board;
 mod colours;
+mod custom_move;
+mod game_logic;
 mod graphics;
 mod piece;
 mod point;
-mod game_logic;
 mod text;
 
 mod prelude {
     pub use crate::board::*;
     pub use crate::colours::*;
+    pub use crate::custom_move::*;
+    pub use crate::game_logic::*;
     pub use crate::graphics::*;
     pub use crate::piece::*;
     pub use crate::point::*;
-    pub use crate::game_logic::*;
     pub use crate::text::*;
     pub use minifb::{Key, KeyRepeat, Window, WindowOptions};
     pub const SQUARE_SIZE: usize = 80;
@@ -44,42 +46,48 @@ fn main() {
         let mut delta_x: i32 = 0;
         let mut delta_y: i32 = 0;
 
-
         // graphics.set_background(Colours::BLUE);
-        graphics.render_board(&game, &mouse);
 
-        
-        
+        let mut possible_moves: Vec<CustomMove> = Vec::new();
+        graphics.render_board(&game, &mouse, &possible_moves);
 
         match window.get_keys_pressed(KeyRepeat::No) {
             keys => {
                 for key in &keys {
                     match key {
                         Key::A => {
-                             delta_x = -1;
-                        },
+                            if mouse.x > 0 {
+                                mouse.x -= 1;
+                            }
+                            println!("{:?}", &mouse);
+                        }
                         Key::D => {
-                            delta_x = 1;
+                            if mouse.x < 7 {
+                                mouse.x += 1;
+                            }
+                            println!("{:?}", &mouse);
                         }
                         Key::S => {
-                            delta_y = 1;
+                            if mouse.y < 7 {
+                                mouse.y += 1;
+                            }
+                            println!("{:?}", &mouse);
                         }
-
                         Key::W => {
-                            delta_y = -1;
+                            if mouse.y > 0 {
+                                mouse.y -= 1;
+                            }
+                            println!("{:?}", &mouse);
                         }
-
                         Key::K => {
-                            game_logic.get_possible_moves(&game, &mouse);
+                            possible_moves = game_logic.get_possible_moves(&game, &mouse);
+                            println!("{:#?}", possible_moves)
                         }
                         _ => {}
                     }
                 }
             }
         }
-
-        mouse.x += delta_x;
-        mouse.y += delta_y;
 
         /* text.draw(
             &mut graphics.buffer,
@@ -90,7 +98,5 @@ fn main() {
         window
             .update_with_buffer(&graphics.buffer, WIDTH as usize, HEIGHT as usize)
             .unwrap();
-
-           
     }
 }
