@@ -1039,7 +1039,7 @@ impl GameLogic {
                         // Diagonal moves towards the top-right
                         for i in 1..8 {
                             let new_x = x + i;
-                            let new_y = y - i;
+                            let new_y  = y - i;
                             if new_x < 8 && new_y < 8 {
                                 if game.board[new_y][new_x].is_empty() {
 

@@ -67,7 +67,7 @@ impl Graphics {
                     self.draw_rect(
                         Point::new((custom_move.destination.x * SQUARE_SIZE as i32), (custom_move.destination.y * SQUARE_SIZE as i32)),
                         &square,
-                        Colours::RED,
+                        Colours::GRAY,
                     );
 
                 }
