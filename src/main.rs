@@ -17,6 +17,8 @@ mod prelude {
     pub use crate::piece::*;
     pub use crate::point::*;
     pub use crate::text::*;
+    pub use crate::game_logic::GameLogic;
+    pub use crate::custom_move::*;
     pub use minifb::{Key, KeyRepeat, Window, WindowOptions};
     pub const SQUARE_SIZE: usize = 80;
     pub const WIDTH: usize = SQUARE_SIZE * 8;
@@ -40,8 +42,8 @@ fn main() {
     let mut graphics = Graphics::new();
     window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
     let mut mouse = Point::new(4, 4);
+    let mut possible_moves = game_logic.get_possible_moves(&game, &mouse);
 
-    game.get_possible_moves(&mouse);
     let mut delta_x: i32 = 0;
     let mut delta_y: i32 = 0;
 
@@ -51,7 +53,7 @@ fn main() {
 
 
         graphics.set_background(Colours::BLUE);
-        graphics.render_board(&game, &mouse);
+        graphics.render_board(&game, &mouse, &Vec::new());
 
         
         
@@ -97,9 +99,9 @@ fn main() {
         mouse.x += delta_x;
         mouse.y += delta_y;
 
-        graphics.render_board(&game, &mouse);
+        graphics.render_board(&game, &mouse, &possible_moves);
 
-        text.draw(
+        /* text.draw(
             &mut graphics.buffer,
             Point::new(20, (HEIGHT - 20) as i32),
             "Welcome to Ghost Walker",

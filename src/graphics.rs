@@ -49,7 +49,6 @@ impl Graphics {
             for x in 0..8 {
                 let current_piece = &game.board[y][x];
 
-<<<<<<< HEAD
                 let symbol;
 
                 match current_piece {
@@ -59,26 +58,20 @@ impl Graphics {
                     Piece::Black(kind, points) => {
                         symbol = String::from(kind.chars().nth(1).unwrap())
                     }
-                    _ => symbol = String::from(""),
-=======
-
-                let symbol: String;
-
-                match current_piece {
-                    Some(piece) => {
-                        
-                        if piece.name == "Knight" {
-                            symbol = "Kn".to_string()
-                        } else if piece.name == "King" {
-                            symbol = "Ki".to_string()
-                        } else {
-                            symbol = piece.name.chars().nth(0).unwrap().to_string();
-                        }
-        
-                    }
-                    None => symbol = "".to_string()
->>>>>>> master
+                    Piece::Empty => symbol = String::from(""),
                 }
+
+
+                for custom_move in possible_moves {
+                    //println!("possible move found at ({}, {})", x, y);
+                    self.draw_rect(
+                        Point::new((custom_move.destination.x * SQUARE_SIZE as i32), (custom_move.destination.y * SQUARE_SIZE as i32)),
+                        &square,
+                        Colours::RED,
+                    );
+
+                }
+
 
                 if (x + offset) % 2 == 0 {
                     self.draw_rect(
@@ -122,7 +115,6 @@ impl Graphics {
                     );
                 }
 
-<<<<<<< HEAD
                 if &Point::new(x as i32, y as i32) == mouse {
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
@@ -130,8 +122,6 @@ impl Graphics {
                         Colours::RED,
                     );
                 }
-=======
->>>>>>> master
             }
         }
     }
