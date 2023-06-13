@@ -12,4 +12,14 @@ impl Point {
     pub fn to_usize(&self) -> (usize, usize) {
         return (self.x as usize, self.y as usize);
     }
+
+    pub fn is_off_board(&self) -> bool {
+        let board = Point::new(8, 8);
+
+        return self.x > board.x || self.y > board.y;
+    }
+
+    pub fn is_equivalent_to(&self, point_2: &Point) -> bool {
+        return self.x == point_2.x && self.y == point_2.y;
+    }
 }

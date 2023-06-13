@@ -1,11 +1,22 @@
-#[derive(Debug, Clone, PartialEq)]
-pub enum Piece<'a> {
-    White(&'a str, u8),
-    Black(&'a str, u8),
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Piece {
+    White(Warrior, u8),
+    Black(Warrior, u8),
     Empty,
 }
 
-impl Piece<'_> {
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Warrior {
+    Pawn,
+    King,
+    Queen,
+    Rook,
+    Knight,
+    Bishop,
+}
+
+impl Piece {
     pub fn is_black(&self) -> bool {
         match &self {
             Piece::Black(_, _) => return true,

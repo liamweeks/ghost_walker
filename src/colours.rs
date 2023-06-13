@@ -6,6 +6,6 @@ impl Colours {
     pub const GREEN: &'static u32 = &0x00FF00;
     pub const BLUE: &'static u32 = &0x0000FF;
     pub const WHITE: &'static u32 = &0xFFFFFF;
-    pub const GRAY : &'static u32 = &0x808080;
+    pub const GRAY: &'static u32 = &0x808080;
     pub const BLACK: &'static u32 = &0x000000;
 }

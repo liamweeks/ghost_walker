@@ -41,7 +41,6 @@ impl Graphics {
     pub fn render_board(&mut self, game: &Board, mouse: &Point, possible_moves: &Vec<CustomMove>) {
         let square = Point::new(SQUARE_SIZE as i32, SQUARE_SIZE as i32);
         let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
-        
 
         for y in 0..8 {
             let offset = y % 2;
@@ -52,26 +51,42 @@ impl Graphics {
                 let symbol;
 
                 match current_piece {
-                    Piece::White(kind, points) => {
-                        symbol = String::from(kind.chars().nth(1).unwrap())
+                    Piece::White(warrior, points) => {
+                        symbol = match warrior {
+                            Warrior::King => String::from("Ki(W)"),
+                            Warrior::Pawn => String::from("P(W)"),
+                            Warrior::Knight => String::from("Kn(W)"),
+                            Warrior::Bishop => String::from("Bi(W)"),
+                            Warrior::Queen => String::from("Qu(W)"),
+                            Warrior::Rook => String::from("Rk(W)")
+
+                        }
                     }
-                    Piece::Black(kind, points) => {
-                        symbol = String::from(kind.chars().nth(1).unwrap())
+                    Piece::Black(warrior, points) => {
+                        symbol = match warrior {
+                            Warrior::King => String::from("Ki(B)"),
+                            Warrior::Pawn => String::from("P(B)"),
+                            Warrior::Knight => String::from("Kn(B)"),
+                            Warrior::Bishop => String::from("Bi(B)"),
+                            Warrior::Queen => String::from("Qu(B)"),
+                            Warrior::Rook => String::from("Rk(B)")
+
+                        }
                     }
                     Piece::Empty => symbol = String::from(""),
                 }
 
-
                 for custom_move in possible_moves {
                     //println!("possible move found at ({}, {})", x, y);
                     self.draw_rect(
-                        Point::new((custom_move.destination.x * SQUARE_SIZE as i32), (custom_move.destination.y * SQUARE_SIZE as i32)),
+                        Point::new(
+                            custom_move.destination.x * SQUARE_SIZE as i32,
+                            custom_move.destination.y * SQUARE_SIZE as i32,
+                        ),
                         &square,
                         Colours::GRAY,
                     );
-
                 }
-
 
                 if (x + offset) % 2 == 0 {
                     self.draw_rect(
