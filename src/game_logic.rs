@@ -14,7 +14,7 @@ impl GameLogic {
         };
     }
 
-    pub fn consider_moves(&self, list_of_moves: Vec<CustomMove> ) -> CustomMove {
+    pub fn consider_moves(&self, list_of_moves: Vec<CustomMove>) -> CustomMove {
         let mut best_possible_move = CustomMove::new(0, Point::new(0, 0));
 
         for possible_move in list_of_moves {
@@ -25,10 +25,6 @@ impl GameLogic {
 
         return best_possible_move;
     }
-
-
-
-
 
     pub fn get_possible_moves(&self, game: &Board, current_pos: &Point) -> Vec<CustomMove> {
         let mut possible_moves: Vec<CustomMove> = Vec::new();

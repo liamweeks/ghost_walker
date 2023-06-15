@@ -10,7 +10,7 @@ impl CustomMove {
     pub fn new(points: u8, destination: Point) -> Self {
         return Self {
             points,
-            destination
+            destination,
         };
     }
 }

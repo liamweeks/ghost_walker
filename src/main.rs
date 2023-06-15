@@ -15,16 +15,19 @@ mod prelude {
     pub use crate::colours::*;
     pub use crate::custom_move::*;
     pub use crate::game_logic::GameLogic;
+    pub use crate::game_state::*;
     pub use crate::graphics::*;
     pub use crate::piece::*;
     pub use crate::point::*;
     pub use crate::text::*;
-    pub use crate::game_state::*;
     pub use minifb::{Key, KeyRepeat, Window, WindowOptions};
     pub const SQUARE_SIZE: usize = 80;
     pub const WIDTH: usize = SQUARE_SIZE * 8;
     pub const HEIGHT: usize = SQUARE_SIZE * 8;
 }
+
+use std::io;
+use std::io::prelude::*;
 
 fn main() {
     let mut game = Board::new();
@@ -49,7 +52,7 @@ fn main() {
     let mut delta_y: i32 = 0;
 
     let mut game_state = GameState::Player;
-    
+
     let mut old_point = Point::new(0, 0);
 
     graphics.render_board(&game, &mouse, &Vec::new());
@@ -61,7 +64,6 @@ fn main() {
 
         match game_state {
             GameState::Player => {
-
                 match window.get_keys_pressed(KeyRepeat::No) {
                     keys => {
                         for key in &keys {
@@ -92,29 +94,21 @@ fn main() {
                                 }
                                 Key::K => {
                                     possible_moves = game_logic.get_possible_moves(&game, &mouse);
-                                    println!("{:#?}", possible_moves);
                                     graphics.render_board(&game, &mouse, &possible_moves);
-                                    old_point = mouse;
-
-                                    match window.get_keys_pressed(KeyRepeat::No) {
-                                        keys => {
-                                            for key in &keys {
-                                                match key {
-                                                    Key::M => {
-                                                        for custom_move in &possible_moves {
-                                                            if mouse.is_equivalent_to(&custom_move.destination) {
-                                                                let piece = game.get_piece_at(&mouse);
-                                                                game.clone().move_to(piece, &old_point.clone(), &mouse.clone());
-                                                            }
-                                                        }
-                                                    }
-                                                    _ => {}
-                                                }
-                                            }
-                                        }
-                                    }
                                 }
-                               
+                                Key::M => {
+                                    possible_moves = game_logic.get_possible_moves(&game, &mouse);
+                                    println!("You presssed M");
+
+                                    let x_coord: i32 = input(String::from("X:")).parse().unwrap();
+                                    let y_coord: i32 = input(String::from("Y:")).parse().unwrap();
+
+                                    let piece = game.get_piece_at(&mouse);
+                                    game.move_to(&mouse, &Point::new(x_coord, y_coord));
+
+                                    graphics.render_board(&game, &mouse, &possible_moves);
+                                }
+
                                 _ => {}
                             }
                         }
@@ -130,14 +124,12 @@ fn main() {
             }
 
             GameState::CPUThinking => {
-
                 possible_moves = game_logic.get_possible_moves(&game, &mouse);
 
                 game_state = GameState::CPUDisplay;
             }
 
             GameState::CPUDisplay => {
-
                 game_state = GameState::Player;
             }
         }
@@ -152,4 +144,20 @@ fn main() {
             .update_with_buffer(&graphics.buffer, WIDTH as usize, HEIGHT as usize)
             .unwrap();
     }
+}
+
+fn input(query: String) -> String {
+    print!("{}: ", query);
+    io::stdout().flush().unwrap();
+
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read input");
+
+    if let Some('\n') = input.chars().next_back() {
+        input.pop();
+    }
+
+    input
 }

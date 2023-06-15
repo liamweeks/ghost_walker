@@ -16,7 +16,7 @@ impl Point {
     pub fn is_off_board(&self) -> bool {
         let board = Point::new(8, 8);
 
-        return self.x > board.x || self.y > board.y;
+        return self.x < 0 || self.x > board.x || self.y < 0 || self.y > board.y;
     }
 
     pub fn is_equivalent_to(&self, point_2: &Point) -> bool {

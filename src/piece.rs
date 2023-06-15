@@ -5,7 +5,6 @@ pub enum Piece {
     Empty,
 }
 
-
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Warrior {
     Pawn,

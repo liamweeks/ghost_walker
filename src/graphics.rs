@@ -53,27 +53,25 @@ impl Graphics {
                 match current_piece {
                     Piece::White(warrior, points) => {
                         symbol = match warrior {
-                            Warrior::King => String::from("Ki(W)"),
-                            Warrior::Pawn => String::from("P(W)"),
-                            Warrior::Knight => String::from("Kn(W)"),
-                            Warrior::Bishop => String::from("Bi(W)"),
-                            Warrior::Queen => String::from("Qu(W)"),
-                            Warrior::Rook => String::from("Rk(W)")
-
+                            Warrior::King => String::from("Ki"),
+                            Warrior::Pawn => String::from("P"),
+                            Warrior::Knight => String::from("Kn"),
+                            Warrior::Bishop => String::from("Bi"),
+                            Warrior::Queen => String::from("Qu"),
+                            Warrior::Rook => String::from("Rk"),
                         }
                     }
                     Piece::Black(warrior, points) => {
                         symbol = match warrior {
-                            Warrior::King => String::from("Ki(B)"),
-                            Warrior::Pawn => String::from("P(B)"),
-                            Warrior::Knight => String::from("Kn(B)"),
-                            Warrior::Bishop => String::from("Bi(B)"),
-                            Warrior::Queen => String::from("Qu(B)"),
-                            Warrior::Rook => String::from("Rk(B)")
-
+                            Warrior::King => String::from("Ki"),
+                            Warrior::Pawn => String::from("P"),
+                            Warrior::Knight => String::from("Kn"),
+                            Warrior::Bishop => String::from("Bi"),
+                            Warrior::Queen => String::from("Qu"),
+                            Warrior::Rook => String::from("Rk"),
                         }
                     }
-                    Piece::Empty => symbol = String::from(""),
+                    Piece::Empty => symbol = format!("{}{}", x, y),
                 }
 
                 for custom_move in possible_moves {
