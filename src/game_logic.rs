@@ -34,7 +34,7 @@ impl GameLogic {
         );
 
         let piece: &Piece = &game.board[current_pos.y as usize][current_pos.x as usize];
-        let mut destination = Point::new(current_pos.x, current_pos.y);
+        let mut destination /* = Point::new(current_pos.x, current_pos.y) */;
 
         match piece {
             Piece::White(_, _) => {

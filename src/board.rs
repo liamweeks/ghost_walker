@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use std::rc::Rc;
 
 #[derive(Debug, Clone)]
 pub struct Board {
@@ -48,18 +47,25 @@ impl Board {
     pub fn move_to(&mut self, old_point: &Point, new_point: &Point) {
         let piece = self.get_piece_at(old_point);
 
-        if new_point.is_off_board() {
-            println!(
-                "Could not move the piece to ({}, {}) because the point is off the board.",
-                new_point.x, new_point.y
-            );
-        } else {
-            println!(
-                "Trying to move the {:#?} from ({}, {}) to ({}, {})",
-                piece, old_point.x, old_point.y, new_point.x, new_point.y
-            );
-            self.board[old_point.y as usize][old_point.x as usize] = Piece::Empty;
-            self.board[new_point.y as usize][new_point.x as usize] = piece;
+
+        match piece {
+            Piece::Empty => { return; }
+            _ => {
+                if new_point.is_off_board() {
+                    println!(
+                        "Could not move the piece to ({}, {}) because the point is off the board.",
+                        new_point.x, new_point.y
+                    );
+                } else {
+                    println!(
+                        "Trying to move the {:#?} from ({}, {}) to ({}, {})",
+                        piece, old_point.x, old_point.y, new_point.x, new_point.y
+                    );
+                    self.board[old_point.y as usize][old_point.x as usize] = Piece::Empty;
+                    self.board[new_point.y as usize][new_point.x as usize] = piece;
+                }
+            }
         }
+
     }
 }

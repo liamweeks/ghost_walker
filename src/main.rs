@@ -31,7 +31,6 @@ use std::io::prelude::*;
 
 fn main() {
     let mut game = Board::new();
-    let text = Text::new(WIDTH as usize, HEIGHT as usize, 2);
     let game_logic = GameLogic;
 
     let mut window = Window::new(
@@ -48,12 +47,11 @@ fn main() {
     let mut mouse = Point::new(4, 4);
     let mut possible_moves = game_logic.get_possible_moves(&game, &mouse);
 
-    let mut delta_x: i32 = 0;
-    let mut delta_y: i32 = 0;
+    let mut delta_x: i32;
+    let mut delta_y: i32;
 
     let mut game_state = GameState::Player;
 
-    let mut old_point = Point::new(0, 0);
 
     graphics.render_board(&game, &mouse, &Vec::new());
     while window.is_open() && !window.is_key_down(Key::Escape) {
@@ -103,7 +101,6 @@ fn main() {
                                     let x_coord: i32 = input(String::from("X:")).parse().unwrap();
                                     let y_coord: i32 = input(String::from("Y:")).parse().unwrap();
 
-                                    let piece = game.get_piece_at(&mouse);
                                     game.move_to(&mouse, &Point::new(x_coord, y_coord));
 
                                     graphics.render_board(&game, &mouse, &possible_moves);
@@ -159,5 +156,5 @@ fn input(query: String) -> String {
         input.pop();
     }
 
-    input
+    return input;
 }

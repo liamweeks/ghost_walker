@@ -18,8 +18,4 @@ impl Point {
 
         return self.x < 0 || self.x > board.x || self.y < 0 || self.y > board.y;
     }
-
-    pub fn is_equivalent_to(&self, point_2: &Point) -> bool {
-        return self.x == point_2.x && self.y == point_2.y;
-    }
 }
