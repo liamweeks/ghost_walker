@@ -1,20 +1,20 @@
 use crate::prelude::*;
 
 pub struct Text {
-    texture: Vec<u32>,
-    width: usize,
+    pub texture: Vec<u32>,
+    pub width: usize,
     //height: usize,
-    scale: usize,
+    pub scale: usize,
 }
 
 #[inline(always)]
-pub fn color_from_bit(bit: u8) -> u32 {
+pub fn color_from_bit(bit: u8, colour: u32) -> u32 {
     if bit == 0 {
         0x000000
         // *Colours::BLUE
     } else {
         // 0xFFFFFFFF
-        *Colours::GREEN
+        colour
     }
 }
 
@@ -24,14 +24,14 @@ impl Text {
         let mut texture = Vec::with_capacity(128 * 128);
 
         for t in MICROKNIGHT_FONT {
-            texture.push(color_from_bit((t >> 7) & 1));
-            texture.push(color_from_bit((t >> 6) & 1));
-            texture.push(color_from_bit((t >> 5) & 1));
-            texture.push(color_from_bit((t >> 4) & 1));
-            texture.push(color_from_bit((t >> 3) & 1));
-            texture.push(color_from_bit((t >> 2) & 1));
-            texture.push(color_from_bit((t >> 1) & 1));
-            texture.push(color_from_bit(t & 1));
+            texture.push(color_from_bit((t >> 7) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 6) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 5) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 4) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 3) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 2) & 1, Colours::BLUE));
+            texture.push(color_from_bit((t >> 1) & 1, Colours::BLUE));
+            texture.push(color_from_bit(t & 1, Colours::BLUE));
         }
 
         Self {
@@ -42,7 +42,34 @@ impl Text {
         }
     }
 
-    pub fn draw(&self, screen: &mut [u32], point: Point, text: &str) {
+
+    pub fn change_colour(&self, colour: u32) -> Text {
+        // unpack texture for easier drawing
+        let mut texture = Vec::with_capacity(128 * 128);
+
+        for t in MICROKNIGHT_FONT {
+            texture.push(color_from_bit((t >> 7) & 1, colour));
+            texture.push(color_from_bit((t >> 6) & 1, colour));
+            texture.push(color_from_bit((t >> 5) & 1, colour));
+            texture.push(color_from_bit((t >> 4) & 1, colour));
+            texture.push(color_from_bit((t >> 3) & 1, colour));
+            texture.push(color_from_bit((t >> 2) & 1, colour));
+            texture.push(color_from_bit((t >> 1) & 1, colour));
+            texture.push(color_from_bit(t & 1, colour));
+        }
+
+        Text {
+            texture,
+            width: self.width,
+            //height,
+            scale: self.scale,
+        }
+    }
+
+
+
+
+    pub fn draw(&self, screen: &mut [u32], point: Point, text: &str, colour: u32) {
         let pos = point.to_usize();
         let mut x = pos.0;
         let y = pos.1;
@@ -61,7 +88,7 @@ impl Text {
                     let tx = fx / self.scale;
                     let pixel = texture_offset + (ty * 128) + tx;
                     if pixel != 0 {
-                        screen[((y + fy) * self.width) + fx + x] = self.texture[pixel];
+                        screen[((y + fy) * self.width) + fx + x] = color_from_bit(self.texture[pixel].try_into().unwrap(), colour)   ;
                     }
                 }
             }

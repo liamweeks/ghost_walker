@@ -11,17 +11,17 @@ impl Graphics {
         return Self { buffer };
     }
 
-    pub fn colour_point(&mut self, point: Point, colour: &u32) {
+    pub fn colour_point(&mut self, point: Point, colour: u32) {
         let pixel = point.y * WIDTH as i32 + point.x;
 
         if pixel > (HEIGHT * WIDTH) as i32 || pixel < 0 {
             return; // Since we don't want to draw out of the window boundaries
         } else {
-            self.buffer[((point.x) as i32 + (WIDTH as i32 * (point.y) as i32)) as usize] = *colour;
+            self.buffer[((point.x) as i32 + (WIDTH as i32 * (point.y) as i32)) as usize] = colour;
         }
     }
 
-    pub fn draw_rect(&mut self, top_right_point: Point, dimensions: &Point, colour: &u32) {
+    pub fn draw_rect(&mut self, top_right_point: Point, dimensions: &Point, colour: u32) {
         let offset_x = top_right_point.x;
         let offset_y = top_right_point.y;
 
@@ -47,22 +47,24 @@ impl Graphics {
                 match current_piece {
                     Piece::White(warrior, _) => {
                         symbol = match warrior {
-                            Warrior::King => String::from("Ki"),
+                            // White is uppercase
+                            Warrior::King => String::from("K"),
                             Warrior::Pawn => String::from("P"),
-                            Warrior::Knight => String::from("Kn"),
-                            Warrior::Bishop => String::from("Bi"),
-                            Warrior::Queen => String::from("Qu"),
-                            Warrior::Rook => String::from("Rk"),
+                            Warrior::Knight => String::from("N"),
+                            Warrior::Bishop => String::from("B"),
+                            Warrior::Queen => String::from("Q"),
+                            Warrior::Rook => String::from("R"),
                         }
                     }
                     Piece::Black(warrior, _) => {
                         symbol = match warrior {
-                            Warrior::King => String::from("Ki"),
-                            Warrior::Pawn => String::from("P"),
-                            Warrior::Knight => String::from("Kn"),
-                            Warrior::Bishop => String::from("Bi"),
-                            Warrior::Queen => String::from("Qu"),
-                            Warrior::Rook => String::from("Rk"),
+                            // Black is lowercase
+                            Warrior::King => String::from("k"),
+                            Warrior::Pawn => String::from("p"),
+                            Warrior::Knight => String::from("n"),
+                            Warrior::Bishop => String::from("b"),
+                            Warrior::Queen => String::from("q"),
+                            Warrior::Rook => String::from("r"),
                         }
                     }
                     Piece::Empty => symbol = format!("{}{}", x, y),
@@ -95,11 +97,24 @@ impl Graphics {
                         );
                     }
 
-                    text.draw(
+                    text.change_colour(Colours::GREEN);
+
+                     text.draw(
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
                         &symbol,
+                        Colours::GREEN
                     );
+
+/*                     Text::write_to_buffer(
+                        &mut self.buffer,
+                        SQUARE_SIZE * WIDTH,
+                        &mut Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
+                        &symbol,
+                        Colours::GREEN,
+                        Colours::GREEN
+                    ) */
+
                 } else {
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
@@ -115,11 +130,23 @@ impl Graphics {
                         );
                     }
 
-                    text.draw(
+            text.change_colour(Colours::BLUE);
+
+              text.draw(
                         &mut self.buffer,
                         Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
                         &symbol,
-                    );
+                        Colours::BLUE
+                    ); 
+
+/*                     Text::write_to_buffer(
+                        &mut self.buffer,
+                        SQUARE_SIZE * WIDTH,
+                        &mut Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
+                        &symbol,
+                        Colours::GREEN,
+                        Colours::GREEN
+                    ) */
                 }
 
                 if &Point::new(x as i32, y as i32) == mouse {
