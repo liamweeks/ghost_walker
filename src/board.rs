@@ -49,6 +49,7 @@ impl Board {
 
         match piece {
             Piece::Empty => {
+                println!("Empty space detected, not moved.");
                 return;
             }
             _ => {

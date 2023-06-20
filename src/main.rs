@@ -47,15 +47,12 @@ fn main() {
     let mut mouse = Point::new(4, 4);
     let mut possible_moves = game_logic.get_possible_moves(&game, &mouse);
 
-    let mut delta_x: i32;
-    let mut delta_y: i32;
 
     let mut game_state = GameState::Player;
 
     graphics.render_board(&game, &mouse, &Vec::new());
     while window.is_open() && !window.is_key_down(Key::Escape) {
-        delta_x = 0;
-        delta_y = 0;
+
 
         //graphics.set_background(Colours::BLUE);
 
@@ -101,7 +98,6 @@ fn main() {
                                     let y_coord: i32 = input(String::from("Y")).parse().unwrap();
 
                                     game.move_to(&mouse, &Point::new(x_coord, y_coord));
-
                                     graphics.render_board(&game, &mouse, &possible_moves);
                                 }
 
@@ -111,12 +107,9 @@ fn main() {
                     }
                 }
 
-                mouse.x += delta_x;
-                mouse.y += delta_y;
 
                 graphics.render_board(&game, &mouse, &possible_moves);
 
-                //game_state = GameState::CPUThinking;
             }
 
             GameState::CPUThinking => {
@@ -129,12 +122,6 @@ fn main() {
                 game_state = GameState::Player;
             }
         }
-
-        /* text.draw(
-            &mut graphics.buffer,
-            Point::new(20, (HEIGHT - 20) as i32),
-            "Welcome to Ghost Walker",
-        ); */
 
         window
             .update_with_buffer(&graphics.buffer, WIDTH as usize, HEIGHT as usize)

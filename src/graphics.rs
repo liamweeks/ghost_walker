@@ -41,17 +41,6 @@ impl Graphics {
 
             for x in 0..8 {
 
-                for custom_move in possible_moves {
-                    //println!("possible move found at ({}, {})", x, y);
-                    self.draw_rect(
-                        Point::new(
-                            custom_move.destination.x * SQUARE_SIZE as i32,
-                            custom_move.destination.y * SQUARE_SIZE as i32,
-                        ),
-                        &square,
-                        Colours::GRAY,
-                    );
-                }
 
                 if (x + offset) % 2 == 0 {
                     self.draw_rect(
@@ -90,6 +79,8 @@ impl Graphics {
                         Colours::RED,
                     );
                 }
+
+
 
 
 
@@ -156,6 +147,23 @@ impl Graphics {
                 ); 
 
             }
+        }
+        for custom_move in possible_moves {
+            //println!("possible move found at ({}, {})", x, y);
+            self.draw_rect(
+                Point::new(
+                    custom_move.destination.x * SQUARE_SIZE as i32,
+                    custom_move.destination.y * SQUARE_SIZE as i32,
+                ),
+                &square,
+                Colours::GRAY,
+            );
+            text.draw(
+                &mut self.buffer,
+                Point::new((custom_move.destination.x * SQUARE_SIZE as i32) + 35, (custom_move.destination.y * SQUARE_SIZE as i32) + 35),
+                format!("{}{}", custom_move.destination.x, custom_move.destination.y),
+                Colours::RED,
+            ); 
         }
     }
 }
