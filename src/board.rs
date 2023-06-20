@@ -47,9 +47,10 @@ impl Board {
     pub fn move_to(&mut self, old_point: &Point, new_point: &Point) {
         let piece = self.get_piece_at(old_point);
 
-
         match piece {
-            Piece::Empty => { return; }
+            Piece::Empty => {
+                return;
+            }
             _ => {
                 if new_point.is_off_board() {
                     println!(
@@ -66,6 +67,5 @@ impl Board {
                 }
             }
         }
-
     }
 }

@@ -18,4 +18,8 @@ impl Point {
 
         return self.x < 0 || self.x > board.x || self.y < 0 || self.y > board.y;
     }
+
+    pub fn matches(&self, new_point: Point) -> bool {
+        return self.x == new_point.x && self.y == new_point.y;
+    }
 }

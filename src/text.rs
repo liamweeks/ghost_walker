@@ -42,7 +42,6 @@ impl Text {
         }
     }
 
-
     pub fn change_colour(&self, colour: u32) -> Text {
         // unpack texture for easier drawing
         let mut texture = Vec::with_capacity(128 * 128);
@@ -66,10 +65,7 @@ impl Text {
         }
     }
 
-
-
-
-    pub fn draw(&self, screen: &mut [u32], point: Point, text: &str, colour: u32) {
+    pub fn draw(&self, screen: &mut [u32], point: Point, text: String, colour: u32) {
         let pos = point.to_usize();
         let mut x = pos.0;
         let y = pos.1;
@@ -88,7 +84,8 @@ impl Text {
                     let tx = fx / self.scale;
                     let pixel = texture_offset + (ty * 128) + tx;
                     if pixel != 0 {
-                        screen[((y + fy) * self.width) + fx + x] = color_from_bit(self.texture[pixel].try_into().unwrap(), colour)   ;
+                        screen[((y + fy) * self.width) + fx + x] =
+                            color_from_bit(self.texture[pixel].try_into().unwrap(), colour);
                     }
                 }
             }

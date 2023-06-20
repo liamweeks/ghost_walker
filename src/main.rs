@@ -52,7 +52,6 @@ fn main() {
 
     let mut game_state = GameState::Player;
 
-
     graphics.render_board(&game, &mouse, &Vec::new());
     while window.is_open() && !window.is_key_down(Key::Escape) {
         delta_x = 0;
@@ -98,8 +97,8 @@ fn main() {
                                     possible_moves = game_logic.get_possible_moves(&game, &mouse);
                                     println!("You presssed M");
 
-                                    let x_coord: i32 = input(String::from("X:")).parse().unwrap();
-                                    let y_coord: i32 = input(String::from("Y:")).parse().unwrap();
+                                    let x_coord: i32 = input(String::from("X")).parse().unwrap();
+                                    let y_coord: i32 = input(String::from("Y")).parse().unwrap();
 
                                     game.move_to(&mouse, &Point::new(x_coord, y_coord));
 

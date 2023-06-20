@@ -40,35 +40,6 @@ impl Graphics {
             let offset = y % 2;
 
             for x in 0..8 {
-                let current_piece = &game.board[y][x];
-
-                let symbol;
-
-                match current_piece {
-                    Piece::White(warrior, _) => {
-                        symbol = match warrior {
-                            // White is uppercase
-                            Warrior::King => String::from("K"),
-                            Warrior::Pawn => String::from("P"),
-                            Warrior::Knight => String::from("N"),
-                            Warrior::Bishop => String::from("B"),
-                            Warrior::Queen => String::from("Q"),
-                            Warrior::Rook => String::from("R"),
-                        }
-                    }
-                    Piece::Black(warrior, _) => {
-                        symbol = match warrior {
-                            // Black is lowercase
-                            Warrior::King => String::from("k"),
-                            Warrior::Pawn => String::from("p"),
-                            Warrior::Knight => String::from("n"),
-                            Warrior::Bishop => String::from("b"),
-                            Warrior::Queen => String::from("q"),
-                            Warrior::Rook => String::from("r"),
-                        }
-                    }
-                    Piece::Empty => symbol = format!("{}{}", x, y),
-                }
 
                 for custom_move in possible_moves {
                     //println!("possible move found at ({}, {})", x, y);
@@ -96,25 +67,6 @@ impl Graphics {
                             Colours::RED,
                         );
                     }
-
-                    text.change_colour(Colours::GREEN);
-
-                     text.draw(
-                        &mut self.buffer,
-                        Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        &symbol,
-                        Colours::GREEN
-                    );
-
-/*                     Text::write_to_buffer(
-                        &mut self.buffer,
-                        SQUARE_SIZE * WIDTH,
-                        &mut Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        &symbol,
-                        Colours::GREEN,
-                        Colours::GREEN
-                    ) */
-
                 } else {
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
@@ -129,24 +81,6 @@ impl Graphics {
                             Colours::RED,
                         );
                     }
-
-            text.change_colour(Colours::BLUE);
-
-              text.draw(
-                        &mut self.buffer,
-                        Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        &symbol,
-                        Colours::BLUE
-                    ); 
-
-/*                     Text::write_to_buffer(
-                        &mut self.buffer,
-                        SQUARE_SIZE * WIDTH,
-                        &mut Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
-                        &symbol,
-                        Colours::GREEN,
-                        Colours::GREEN
-                    ) */
                 }
 
                 if &Point::new(x as i32, y as i32) == mouse {
@@ -156,6 +90,71 @@ impl Graphics {
                         Colours::RED,
                     );
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                let current_piece = &game.board[y][x];
+                let mut colour  = Colours::RED;
+                let mut symbol = String::from("");
+
+
+                match current_piece {
+                    Piece::White(warrior, _) => {
+                        colour = Colours::GREEN;
+
+
+                        symbol = match warrior {
+                            // White is uppercase
+                            Warrior::King => String::from("K"),
+                            Warrior::Pawn => String::from("P"),
+                            Warrior::Knight => String::from("N"),
+                            Warrior::Bishop => String::from("B"),
+                            Warrior::Queen => String::from("Q"),
+                            Warrior::Rook => String::from("R"),
+                        }
+                    }
+                    Piece::Black(warrior, _) => {
+                        colour = Colours::BLUE;
+
+                        symbol = match warrior {
+                            // Black is lowercase
+                            Warrior::King => String::from("k"),
+                            Warrior::Pawn => String::from("p"),
+                            Warrior::Knight => String::from("n"),
+                            Warrior::Bishop => String::from("b"),
+                            Warrior::Queen => String::from("q"),
+                            Warrior::Rook => String::from("r"),
+                        }
+                    }
+                    Piece::Empty => symbol = format!("{}{}", x, y),
+                }
+
+                text.draw(
+                    &mut self.buffer,
+                    Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
+                    symbol,
+                    colour,
+                ); 
+
             }
         }
     }
