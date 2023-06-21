@@ -47,13 +47,10 @@ fn main() {
     let mut mouse = Point::new(4, 4);
     let mut possible_moves = game_logic.get_possible_moves(&game, &mouse);
 
-
     let mut game_state = GameState::Player;
 
     graphics.render_board(&game, &mouse, &Vec::new());
     while window.is_open() && !window.is_key_down(Key::Escape) {
-
-
         //graphics.set_background(Colours::BLUE);
 
         match game_state {
@@ -107,9 +104,7 @@ fn main() {
                     }
                 }
 
-
                 graphics.render_board(&game, &mouse, &possible_moves);
-
             }
 
             GameState::CPUThinking => {

@@ -40,8 +40,6 @@ impl Graphics {
             let offset = y % 2;
 
             for x in 0..8 {
-
-
                 if (x + offset) % 2 == 0 {
                     self.draw_rect(
                         Point::new((x * SQUARE_SIZE) as i32, (y * SQUARE_SIZE) as i32),
@@ -80,38 +78,13 @@ impl Graphics {
                     );
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                let current_piece = &game.board[y][x];
-                let mut colour  = Colours::RED;
+                let current_piece = &game.board[x][y];
+                let mut colour = Colours::RED;
                 let mut symbol = String::from("");
-
 
                 match current_piece {
                     Piece::White(warrior, _) => {
                         colour = Colours::GREEN;
-
 
                         symbol = match warrior {
                             // White is uppercase
@@ -144,8 +117,7 @@ impl Graphics {
                     Point::new((x * SQUARE_SIZE + 35) as i32, (y * SQUARE_SIZE + 35) as i32),
                     symbol,
                     colour,
-                ); 
-
+                );
             }
         }
         for custom_move in possible_moves {
@@ -160,10 +132,13 @@ impl Graphics {
             );
             text.draw(
                 &mut self.buffer,
-                Point::new((custom_move.destination.x * SQUARE_SIZE as i32) + 35, (custom_move.destination.y * SQUARE_SIZE as i32) + 35),
+                Point::new(
+                    (custom_move.destination.x * SQUARE_SIZE as i32) + 35,
+                    (custom_move.destination.y * SQUARE_SIZE as i32) + 35,
+                ),
                 format!("{}{}", custom_move.destination.x, custom_move.destination.y),
                 Colours::RED,
-            ); 
+            );
         }
     }
 }
